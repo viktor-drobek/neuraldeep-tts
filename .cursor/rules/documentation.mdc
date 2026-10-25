@@ -1,0 +1,11 @@
+---
+description: documentation
+alwaysApply: false
+globs:
+  - "*.md"
+  - "tests/test_examples.py"
+---
+
+# Documentation evidence
+
+Describe only the helper's supported workflows. Separate provider capabilities from enabled operations. Keep SKILL.md, README.md, STARTER_RELAY.md and TESTING.md consistent. Parse examples without executing API calls. Report exact tests actually run and never claim offline fixtures verify a live quota schema or provider execution.

@@ -1,0 +1,43 @@
+name: tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.x"]
+    env:
+      NEURALDEEP_API_KEY: ""
+      NEURALDEEP_SEARCH_API_KEY: ""
+      NEURALDEEP_SPEECHCORE_API_KEY: ""
+      NEURALDEEP_IMAGES_API_KEY: ""
+      NEURALDEEP_OCR_API_KEY: ""
+      NEURALDEEP_TRANSCRIPTIONS_API_KEY: ""
+      NEURALDEEP_DIARIZATION_API_KEY: ""
+      NEURALDEEP_CHAT_API_KEY: ""
+      NEURALDEEP_EMBEDDINGS_API_KEY: ""
+      NEURALDEEP_RERANK_API_KEY: ""
+      NEURALDEEP_TTS_API_KEY: ""
+      NEURALDEEP_MUSIC_API_KEY: ""
+      NEURALDEEP_PII_API_KEY: ""
+      NEURALDEEP_DECISIONS_API_KEY: ""
+      NEURALDEEP_BOOKS_API_KEY: ""
+      NEURALDEEP_DRIFT_API_TOKEN: ""
+      CODDY_HOME: /nonexistent-coddy-home
+      TMPDIR: ${{ runner.temp }}
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Offline suite
+        run: python3 -B -m unittest discover -s tests -v
+      - name: CLI help without network
+        run: python3 -B scripts/client.py --help
